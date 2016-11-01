@@ -22,7 +22,7 @@ public class DataLoader {
 			symbols = new ArrayList<String>();
 			symbolsRicequant = new HashMap<String, String>();
 			BufferedReader br = FileOperation
-					.openFile("E:\\360_Quant\\Quant_Strategy\\Be_A_Quant\\MoneyFloatStrategy\\money_float.txt");
+					.openFile("E:\\Be_A_Quant\\MoneyFloatStrategy\\money_float.txt");
 			String s;
 			while ((s = br.readLine()) != null) {
 				if (s.length() == 6) {
@@ -65,7 +65,7 @@ public class DataLoader {
 			br.close();
 
 			br = FileOperation
-					.openFile("E:\\360_Quant\\Quant_Strategy\\Be_A_Quant\\MoneyFloatStrategy\\stocks_ricequant.txt");
+					.openFile("E:\\Be_A_Quant\\MoneyFloatStrategy\\stocks_ricequant.txt");
 			while ((s = br.readLine()) != null) {
 				symbolsRicequant.put(s.trim().substring(0, 6), s.trim());
 			}
@@ -77,13 +77,15 @@ public class DataLoader {
 
 	public static void updateData() {
 		try {
-			String originalData = "E:\\360_Quant\\Quant_Strategy\\Be_A_Quant\\MoneyFloatStrategy\\money_float.txt";
-			String updateData = "E:\\360_Quant\\Quant_Strategy\\Be_A_Quant\\MoneyFloatStrategy\\money_float_1012.txt";
-			String newData = "E:\\360_Quant\\Quant_Strategy\\Be_A_Quant\\MoneyFloatStrategy\\money_float_new.txt";
+			String originalData = "E:\\Be_A_Quant\\MoneyFloatStrategy\\money_float.txt";
+			String updateData = "E:\\Be_A_Quant\\MoneyFloatStrategy\\money_float_1028.txt";
+			String newData = "E:\\Be_A_Quant\\MoneyFloatStrategy\\money_float_new.txt";
 
 			BufferedReader originalDataBr = FileOperation
 					.openFile(originalData);
-			BufferedReader updateDataBr = FileOperation.openFile(updateData);
+			
+			BufferedReader updateDataBr = new BufferedReader(new InputStreamReader(
+					new FileInputStream(updateData), "UTF-8")); 
 			BufferedWriter newDataBw = FileOperation.writeFile(newData);
 			HashMap<String, TreeMap<Integer, String>> dataFull = new HashMap<String, TreeMap<Integer, String>>();
 
@@ -200,7 +202,7 @@ public class DataLoader {
 
 	static void transformData() throws Exception {
 		HashMap<String, HashSet<String>> output = new HashMap<String, HashSet<String>>();
-		String updateData = "E:\\360_Quant\\Quant_Strategy\\Be_A_Quant\\MoneyFloatStrategy\\money_float_1012.txt";
+		String updateData = "E:\\Be_A_Quant\\MoneyFloatStrategy\\money_float_1028.txt";
 		BufferedReader updateDataBr = new BufferedReader(new InputStreamReader(
 				new FileInputStream(updateData), "UTF-8"));
 		String firstLine = "		最新				主力		超大单							大单							中单							小单					";
@@ -268,7 +270,7 @@ public class DataLoader {
 
 		for (String date : output.keySet()) {
 			String fileName = date + ".txt";
-			String newData = "E:\\360_Quant\\Quant_Strategy\\Be_A_Quant\\MoneyFloatStrategy\\Temp\\"
+			String newData = "E:\\Be_A_Quant\\MoneyFloatStrategy\\Temp\\"
 					+ fileName;
 			BufferedWriter newDataBw = FileOperation.writeFile(newData);
 			HashSet<String> content = output.get(date);
@@ -286,8 +288,8 @@ public class DataLoader {
 	}
 
 	public static void main(String[] args) throws Exception {
-		//updateData();
-		transformData();
+		updateData();
+//		transformData();
 	}
 
 }
